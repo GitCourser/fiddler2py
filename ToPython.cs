@@ -112,7 +112,7 @@ namespace ToPython
             codeBox.ReadOnly = true;
             codeBox.Multiline = true;
             codeBox.Dock = DockStyle.Fill;
-            codeBox.Text = "\n\tDrag and drop the request here\n\t将请求拖放到此处\n\n\thttps://github.com/GitCourser/fiddler2py\n";
+            codeBox.Text = "\n\tDrag and drop the request here\n\t将请求拖放到此处\n\n\tby Courser\n\thttps://github.com/GitCourser/fiddler2py\n";
 
             // 拖放与点击
             codeBox.AllowDrop = true;
