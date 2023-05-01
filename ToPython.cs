@@ -29,13 +29,19 @@ namespace ToPython
         }
 
         private void TextBox_DragDrop(object sender, DragEventArgs e){
-            DataObject v_obj = (DataObject)e.Data;
-            Session[] session_arr = (Session[]) v_obj.GetData("Fiddler.Session[]");
-            Session session = session_arr[0];
+            DataObject dataObject = (DataObject)e.Data;
+            if (!dataObject.GetDataPresent("Fiddler.Session[]"))
+                return;
+
+            Session[] sessions = (Session[])dataObject.GetData("Fiddler.Session[]");
+            if (sessions.Length == 0)
+                return;
+
+            Session session = sessions[0];
             Uri url = new Uri(session.fullUrl);
-            string RequestBody = Encoding.UTF8.GetString(session.RequestBody);
             string query = url.Query;
             string req_method = "get";
+            string RequestBody = Encoding.UTF8.GetString(session.RequestBody);
 
             // 生成Python代码
             StringBuilder sb = new StringBuilder();
@@ -106,8 +112,7 @@ namespace ToPython
             codeBox.ReadOnly = true;
             codeBox.Multiline = true;
             codeBox.Dock = DockStyle.Fill;
-            codeBox.Font = new System.Drawing.Font("Consolas", 11);
-            codeBox.Text = "\n  Drag and drop the request here\n  将请求拖放到此处\n\n  https://github.com/GitCourser/fiddler2py";
+            codeBox.Text = "\n\tDrag and drop the request here\n\t将请求拖放到此处\n\n\thttps://github.com/GitCourser/fiddler2py\n";
 
             // 拖放与点击
             codeBox.AllowDrop = true;
